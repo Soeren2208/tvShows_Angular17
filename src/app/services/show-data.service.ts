@@ -13,4 +13,8 @@ export class ShowDataService {
     this.shows.push(new Show(3, 'Downton Abbey'));
     this.shows.push(new Show(4, 'The Witcher'));
   }
+
+  public saveShow(newShow: Show){
+    this.shows.push(newShow);
+  }
 }

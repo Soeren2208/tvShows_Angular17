@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { Show} from "../model/show";
 import {ShowDataService} from "../services/show-data.service";
 import { NgFor} from "@angular/common";
+import {ShowFormComponent} from "../show-form/show-form.component";
 
 @Component({
   selector: 'app-show-list',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, ShowFormComponent],
   templateUrl: './show-list.component.html',
   styleUrl: './show-list.component.css'
 })
