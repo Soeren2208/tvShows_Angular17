@@ -6,9 +6,14 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let show of shows">
-    <td>{{show.id}}</td>
-    <td>{{show.title}}</td>
-  </tr>
+  @for(show of shows; track show.id){
+    <tr>
+        <td>{{show.id}}</td>
+        <td>{{show.title}}</td>
+    </tr>
+  }
   </tbody>
 </table>
+
+
+
