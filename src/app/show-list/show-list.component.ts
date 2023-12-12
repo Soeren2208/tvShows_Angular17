@@ -4,6 +4,7 @@ import {ShowDataService} from "../services/show-data.service";
 import { NgFor} from "@angular/common";
 import {ShowFormComponent} from "../show-form/show-form.component";
 import {FormsModule} from "@angular/forms";
+import {ShowDetailService} from "../services/show-detail.service";
 
 @Component({
   selector: 'app-show-list',
@@ -15,7 +16,7 @@ import {FormsModule} from "@angular/forms";
 export class ShowListComponent {
   editShow: Show;
 
-  constructor(private service: ShowDataService){}
+  constructor(private service: ShowDataService, private showDetailService: ShowDetailService){}
 
   get shows(): Show[]{
     return this.service.shows;
@@ -42,5 +43,9 @@ export class ShowListComponent {
 
   deleteShow(show: Show){
     this.service.deleteShow(show);
+  }
+
+  showDetails(show: Show){
+    this.showDetailService.getShowDetails(show.title);
   }
 }
