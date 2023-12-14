@@ -9,7 +9,7 @@ import {ShowDetailService} from "../services/show-detail.service";
 @Component({
   selector: 'app-show-list',
   standalone: true,
-  imports: [NgFor, ShowFormComponent, FormsModule],
+  imports: [ShowFormComponent, FormsModule],
   templateUrl: './show-list.component.html',
   styleUrl: './show-list.component.css'
 })
