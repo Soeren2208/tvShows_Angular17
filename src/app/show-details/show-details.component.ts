@@ -1,24 +1,28 @@
-import { Component } from '@angular/core';
-import { ShowDetailService} from "../services/show-detail.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {CommonModule} from "@angular/common";
+import { ApiService} from "../services/api.service";
 import {Show} from "../model/show";
-import {async, Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-show-details',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './show-details.component.html',
   styleUrl: './show-details.component.css'
 })
-export class ShowDetailsComponent {
-  show!: Show;
+export class ShowDetailsComponent implements OnInit{
+  //detailShow: Show;
+  //@Input()
+  detailShow$: Observable<Show>;
 
-  constructor(private detailService: ShowDetailService) {
+  constructor(private detailService: ApiService) {
+    //this.detailService.detailShow.subscribe(show =>{
+    //  this.detailShow = show;
+    //});
   }
 
-  get detailShow(): Show{
-    return this.detailService.detailShow;
+  ngOnInit(): void {
+    this.detailShow$ = this.detailService.detailShow;
   }
-
-
-}
+ }

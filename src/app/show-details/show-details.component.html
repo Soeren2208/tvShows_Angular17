@@ -1,7 +1,10 @@
-<div class="card">
-  <img class="card-img-top" style="width: 18rem;" src={{detailShow.image}}>
-  <div class="card-body">
-    <h4 class="card-title">{{detailShow.title}}</h4>
-    <p class="card-text" [innerHTML]="detailShow.summary"></p>
+@if(detailShow$ | async; as detailShow){
+  <div class="card">
+    <img class="card-img-top" img-fluid src={{detailShow.image}}>
+    <!--<img class="card-img-top" style="width: 18rem;" src={{detailShow.image}}> -->
+      <div class="card-body">
+      <h4 class="card-title">{{detailShow.title}}</h4>
+      <p class="card-text" [innerHTML]="detailShow.summary"></p>
+    </div>
   </div>
-</div>
+}

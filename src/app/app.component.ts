@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, RouterOutlet} from '@angular/router';
-import {ShowListComponent} from "./show-list/show-list.component";
-import {ShowFormComponent} from "./show-form/show-form.component";
-import {ShowDetailsComponent} from "./show-details/show-details.component";
-import {ShowDetailService} from "./services/show-detail.service";
+
 
 @Component({
   selector: 'app-root',
@@ -16,11 +13,5 @@ import {ShowDetailService} from "./services/show-detail.service";
 export class AppComponent {
   title = 'tvShows';
 
-  constructor(private service: ShowDetailService){
 
-  }
-
-  get detailShow(){
-    return this.service.detailShow;
-  }
 }

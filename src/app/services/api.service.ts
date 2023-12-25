@@ -1,23 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from "@angular/common/http";
 import {Show} from "../model/show";
-import {Observable} from "rxjs";
 import {ShowDTO} from "../model/showDTO";
+import {Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ShowDetailService {
-  detailShow: Show=null;
+export class ApiService {
+  private baseUrl: string = "https://api.tvmaze.com";
+  private detailShow$: Subject<Show> = new Subject<Show | undefined>();
+
 
   constructor(private httpClient: HttpClient) { }
 
-  getShowDetails(title: string): void{
-    this.detailShow= new Show(null, title);
-    this.httpClient.get<ShowDTO>('http://api.tvmaze.com/singlesearch/shows?q=' + title).subscribe(s => {
-      this.detailShow.summary = s.summary;
-      this.detailShow.image = s.image.medium;
+  setSelectectedShow(show: Show) {
+    const apiUrl = `${this.baseUrl}/singlesearch/shows?q=${show.title}`;
+    //Backticks verwenden, um sicherzustellen, dass die Ausdrücke innerhalb der ${...}`-Notation ausgewertet werden.
+    this.httpClient.get<ShowDTO>(apiUrl).subscribe({
+      next: (s) => {
+        show.summary = s.summary;
+        show.image = s.image?.medium; // Optional chaining to avoid null/undefined errors
+        this.detailShow$.next(show);
+      }
     });
-    console.log(this.detailShow);
   }
+
+  get detailShow(): Observable<Show |undefined>{
+    return this.detailShow$;
+  }
+
+
 }
