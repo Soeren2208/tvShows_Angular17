@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import { ApiService} from "../services/api.service";
 import {Show} from "../model/show";
-import {Observable, of} from "rxjs";
+import {catchError, EMPTY, Observable, of, Subject} from "rxjs";
 
 @Component({
   selector: 'app-show-details',
@@ -11,10 +11,13 @@ import {Observable, of} from "rxjs";
   templateUrl: './show-details.component.html',
   styleUrl: './show-details.component.css'
 })
-export class ShowDetailsComponent implements OnInit{
+export class ShowDetailsComponent implements OnInit {
   //detailShow: Show;
   //@Input()
-  detailShow$: Observable<Show>;
+  detailShow: Show;
+  public errorMessage$: Subject<string> = new Subject<string>();
+
+  //apiError: boolean = false;
 
   constructor(private detailService: ApiService) {
     //this.detailService.detailShow.subscribe(show =>{
@@ -23,6 +26,15 @@ export class ShowDetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.detailShow$ = this.detailService.detailShow;
+    this.detailService.detailShow.pipe(
+      catchError((error: any) => {
+        const errorMessage = `${error.name}: ${error.message}`;
+        this.errorMessage$.next(errorMessage);
+        console.log('mein Fehler');
+        return EMPTY; //leeres Observable
+      })
+    ).subscribe((s: Show) =>{
+      this.detailShow = s;
+    });
   }
- }
+}

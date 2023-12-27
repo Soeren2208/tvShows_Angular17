@@ -18,16 +18,18 @@ import {Observable} from "rxjs";
 })
 export class MainViewComponent {
   isShowSelected = false;
-  selectedShow$: Observable<Show | undefined>
+  selectedShow: Show;
   constructor(private service: ApiService){
 
   }
 
   onSelectedShow(show: Show){
     console.log(show);
-    this.service.setSelectectedShow(show);
+    this.service.setSelectectedShow(show).subscribe();
     this.isShowSelected = true;
     console.log(this.isShowSelected);
-    this.selectedShow$=this.service.detailShow;
+    //this.service.detailShow.subscribe((s: Show) => {
+      //this.selectedShow=s;
+    //});
   }
 }

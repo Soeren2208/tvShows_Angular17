@@ -1,10 +1,17 @@
-@if(detailShow$ | async; as detailShow){
+<ng-container *ngIf="errorMessage$ |async as errorMessage">
+  <div class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+</ng-container>
+
+@if(detailShow){
   <div class="card">
     <img class="card-img-top" img-fluid src={{detailShow.image}}>
-    <!--<img class="card-img-top" style="width: 18rem;" src={{detailShow.image}}> -->
+
       <div class="card-body">
-      <h4 class="card-title">{{detailShow.title}}</h4>
-      <p class="card-text" [innerHTML]="detailShow.summary"></p>
-    </div>
+       <h4 class="card-title">{{detailShow.title}}</h4>
+        <p class="card-text" [innerHTML]="detailShow.summary"></p>
+      </div>
   </div>
 }
+
