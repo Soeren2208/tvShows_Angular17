@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { Show} from "../model/show";
 import {ShowDataService} from "../services/show-data.service";
 import { NgFor} from "@angular/common";
@@ -14,14 +14,11 @@ import {ApiService} from "../services/api.service";
   styleUrl: './show-list.component.css'
 })
 export class ShowListComponent {
-  //@Output() selectedShow = new EventEmitter<Show>();
+  @Input() shows: Show[] =[];
+  @Output() selectedShow = new EventEmitter<Show>();
   editShow: Show;
 
   constructor(private service: ShowDataService, private showDetailService: ApiService){}
-
-  get shows(): Show[]{
-    return this.service.shows;
-  }
 
   edit(show: Show){
     this.editShow = show;
@@ -47,7 +44,8 @@ export class ShowListComponent {
   }
 
     showDetails(show: Show){
-    //this.selectedShow.emit(show);
-    this.showDetailService.setSelectectedShow(show);
+    console.log('in showListComponent:: showDetails:: die übergebene Show:', show);
+    this.selectedShow.emit(show);
+    //this.showDetailService.setSelectectedShow(show);
   }
 }

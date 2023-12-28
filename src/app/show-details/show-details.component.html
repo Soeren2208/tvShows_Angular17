@@ -4,7 +4,7 @@
   </div>
 </ng-container>
 
-@if(detailShow){
+@if(detailShow$ | async; as detailShow){
   <div class="card">
     <img class="card-img-top" img-fluid src={{detailShow.image}}>
 

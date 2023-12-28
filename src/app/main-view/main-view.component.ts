@@ -5,7 +5,8 @@ import {ShowDetailsComponent} from "../show-details/show-details.component";
 import {ApiService} from "../services/api.service";
 import {Show} from "../model/show";
 import {NgIf} from "@angular/common";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
+import {ShowDataService} from "../services/show-data.service";
 
 @Component({
   selector: 'app-main-view',
@@ -17,19 +18,21 @@ import {Observable} from "rxjs";
   styleUrl: './main-view.component.css'
 })
 export class MainViewComponent {
+  selectedShow$: BehaviorSubject<Show>;
   isShowSelected = false;
-  selectedShow: Show;
-  constructor(private service: ApiService){
 
+  get shows(): Show[]{
+    return this.dataService.shows;
+  }
+
+  constructor(private dataService: ShowDataService, private apiService: ApiService){
+    this.selectedShow$ = new BehaviorSubject<Show>(null);
   }
 
   onSelectedShow(show: Show){
-    console.log(show);
-    this.service.setSelectectedShow(show).subscribe();
+    this.apiService.getDetailShow(show.title).subscribe((s) =>{
+      this.selectedShow$.next(s);
+    });
     this.isShowSelected = true;
-    console.log(this.isShowSelected);
-    //this.service.detailShow.subscribe((s: Show) => {
-      //this.selectedShow=s;
-    //});
   }
 }
